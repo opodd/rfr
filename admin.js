@@ -373,9 +373,11 @@ async function handleFormSubmission(form) {
       showToast('Product added successfully!', 'success')
       form.reset()
       
-      // Reset image previews
+      // Reset image previews and upload areas
       const preview = form.querySelector('.image-preview')
+      const uploadArea = form.querySelector('.upload-area')
       if (preview) preview.classList.add('hidden')
+      if (uploadArea) uploadArea.style.display = 'block'
       
       renderProducts()
     }
@@ -412,7 +414,9 @@ function closeModal() {
     if (form) {
       form.reset()
       const preview = form.querySelector('.image-preview')
+      const uploadArea = form.querySelector('.upload-area')
       if (preview) preview.classList.add('hidden')
+      if (uploadArea) uploadArea.style.display = 'block'
     }
   }
 }
@@ -494,11 +498,19 @@ function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
     })
   }
 
-  // Click handler for upload area
+  // Click handler for upload area - only when no image is selected
   uploadArea.addEventListener('click', (e) => {
-    if (e.target === uploadArea || uploadArea.contains(e.target)) {
-      input.click()
+    // Only trigger file input if upload area is visible and preview is hidden
+    if (uploadArea.style.display === 'none' || !preview.classList.contains('hidden')) {
+      return; // Don't open file dialog if preview is showing or upload area is hidden
     }
+    // Prevent clicks on child elements from bubbling up
+    if (e.target !== uploadArea && !uploadArea.contains(e.target)) {
+      return;
+    }
+    e.preventDefault()
+    e.stopPropagation()
+    input.click()
   })
 }
 
