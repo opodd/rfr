@@ -64,7 +64,8 @@ function initializeAdmin() {
   initializeEventListeners();
 }
 
-const API_BASE = 'http://localhost:3000/api'
+// Use relative API base URL to work with both local and deployed environments
+const API_BASE = '/api'
 
 // Global state
 let allProducts = []
