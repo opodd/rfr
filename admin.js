@@ -444,19 +444,17 @@ function setupImagePreviews() {
 
 // Setup image upload with drag & drop for a specific form
 function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
-  let isProcessing = false
+  let clickTimeout = null
   
   // File input change handler
   input.addEventListener('change', (e) => {
-    if (isProcessing) return
-    isProcessing = true
+    // Clear any pending click timeout since we got a file
+    if (clickTimeout) {
+      clearTimeout(clickTimeout)
+      clickTimeout = null
+    }
     
     handleFileSelect(e.target.files[0], preview, previewImg, uploadArea)
-    
-    // Reset processing flag after a short delay
-    setTimeout(() => {
-      isProcessing = false
-    }, 100)
   })
 
   // Drag and drop handlers
@@ -506,9 +504,14 @@ function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
 
   // Click handler for upload area
   uploadArea.addEventListener('click', (e) => {
-    if (!isProcessing) {
-      input.click()
-    }
+    // Prevent multiple rapid clicks
+    if (clickTimeout) return
+    
+    clickTimeout = setTimeout(() => {
+      clickTimeout = null
+    }, 1000) // 1 second debounce
+    
+    input.click()
   })
 }
 
