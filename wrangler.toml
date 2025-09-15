@@ -1,0 +1,23 @@
+name = "mobile-shop-ui"
+main = "server.js"
+compatibility_date = "2024-09-15"
+
+[env.production]
+name = "mobile-shop-ui-production"
+
+[[env.production.vars]]
+NODE_ENV = "production"
+
+[build]
+command = "npm install"
+cwd = "."
+
+[site]
+bucket = "."
+entry-point = "."
+
+# For Node.js compatibility
+node_compat = true
+
+# Environment variables (set these in Cloudflare dashboard)
+# DATABASE_URL = "your_neon_db_connection_string"
