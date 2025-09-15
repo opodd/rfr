@@ -271,9 +271,26 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
+// Serve main shop page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Serve admin panel
+app.get('/admin.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+// Serve admin route (without .html)
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
 // Start server
-app.listen(PORT, async () => {
+const port = process.env.PORT || PORT;
+app.listen(port, async () => {
   await initDB();
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Admin panel: http://localhost:${PORT}/admin.html`);
+  console.log(`Server running on port ${port}`);
+  console.log(`Main shop: /`);
+  console.log(`Admin panel: /admin.html`);
 });
