@@ -496,11 +496,14 @@ function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
 
   // Click handler for upload area
   uploadArea.addEventListener('click', (e) => {
-    // Prevent the event from bubbling up to parent elements
-    // or triggering other handlers for the same event
-    e.stopPropagation();
-    e.preventDefault();
-    input.click();
+    // If the click is on the remove button, don't trigger the file input.
+    if (removeBtn && (e.target === removeBtn || removeBtn.contains(e.target))) {
+      return;
+    }
+    // If the click was not on the input itself, trigger a click on the file input.
+    if (e.target !== input) {
+      input.click();
+    }
   });
 }
 
