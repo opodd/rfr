@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShopFlow - Premium Shopping Experience</title>
+
+  <!-- Modern CDNs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- iPhone Status Bar -->
+    
+    <header class="header">
+      <div class="header-top">
+        
+        <div class="delivery-info">
+          <div class="delivery-label">Delivery address</div>
+          <div class="delivery-address">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="map-pin" class="lucide lucide-map-pin location-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            92 High Street, London
+          </div>
+        </div>
+      </div>
+      <div class="search-bar">
+        <div class="search-container">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search search-icon"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+          <input type="text" id="searchInput" placeholder="Search the entire shop">
+          
+        </div>
+      </div>
+      
+    </header>
+    <main>
+      
+      <section class="flash-sale-section">
+        
+        <div class="flash-timer">02:57:22</div>
+        <div class="products-grid">
+          <!-- Initial skeleton loader - will be replaced by JavaScript -->
+          <div class="skeleton-card">
+            <div class="skeleton-loader skeleton-image"></div>
+            <div class="skeleton-loader skeleton-text rating"></div>
+            <div class="skeleton-loader skeleton-text title"></div>
+            <div class="skeleton-loader skeleton-text price"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-loader skeleton-image"></div>
+            <div class="skeleton-loader skeleton-text rating"></div>
+            <div class="skeleton-loader skeleton-text title"></div>
+            <div class="skeleton-loader skeleton-text price"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-loader skeleton-image"></div>
+            <div class="skeleton-loader skeleton-text rating"></div>
+            <div class="skeleton-loader skeleton-text title"></div>
+            <div class="skeleton-loader skeleton-text price"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skeleton-loader skeleton-image"></div>
+            <div class="skeleton-loader skeleton-text rating"></div>
+            <div class="skeleton-loader skeleton-text title"></div>
+            <div class="skeleton-loader skeleton-text price"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+  </div>
+  
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+  <script src="script.js"></script>
+
+
+</body>
+</html>

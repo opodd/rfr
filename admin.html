@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Shop UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- Password Protection Overlay -->
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-container">
+      <div class="login-header">
+        <h2>Admin Access</h2>
+        <p>Enter password to continue</p>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="input-group">
+          <input type="password" id="passwordInput" placeholder="Enter password" required>
+          <button type="submit" class="login-btn">Access</button>
+        </div>
+        <div id="errorMessage" class="error-message" style="display: none;">
+          Incorrect password. Please try again.
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="admin-shell" style="display: none;" id="adminContent">
+    <header class="admin-header">
+      <h1>Shop Admin</h1>
+      <div class="search-section">
+        <div class="search-container">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search products..." />
+        </div>
+      </div>
+      <div class="actions">
+        <div class="grid-toggle">
+          <button id="grid-1x1" class="grid-btn active" title="List View">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+              <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+            </svg>
+          </button>
+          <button id="grid-2x2" class="grid-btn" title="Grid View">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="7" x="3" y="3" rx="1"></rect>
+              <rect width="18" height="7" x="3" y="14" rx="1"></rect>
+            </svg>
+          </button>
+        </div>
+        <button id="refresh-btn" class="btn">Refresh</button>
+        <button id="clear-btn" class="btn btn-ghost">Clear All</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <section class="add-product desktop-only">
+        <h2>Add New Product</h2>
+        <form id="product-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="product-title">Product Title *</label>
+            <input id="product-title" name="title" required placeholder="Enter product title" />
+          </div>
+
+          <div class="form-group">
+            <label for="product-description">Description</label>
+            <textarea id="product-description" name="description" placeholder="Product description (optional)" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="product-price">Price</label>
+            <input id="product-price" name="price" placeholder="e.g. $99.99" />
+          </div>
+
+          <div class="form-group">
+            <label for="product-image">Product Image</label>
+            <div class="upload-area" id="upload-area">
+              <input id="product-image" name="image" type="file" accept="image/*" />
+              <div class="upload-content">
+                <div class="upload-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                    <circle cx="9" cy="9" r="2"></circle>
+                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                  </svg>
+                </div>
+                <div class="upload-text">
+                  <span class="primary-text">Click to upload</span>
+                  <span class="secondary-text">or drag and drop</span>
+                </div>
+                <div class="upload-hint">PNG, JPG, GIF up to 5MB</div>
+              </div>
+            </div>
+            <div class="image-preview hidden" id="image-preview">
+              <img id="preview-img" src="" alt="preview" />
+              <button type="button" class="remove-image" id="remove-image">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6 6 18"></path>
+                  <path d="M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+            <button type="reset" class="btn btn-ghost">Clear Form</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="products-section">
+        <div class="section-header">
+          <h2>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="section-icon">
+              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+              <path d="M3 6h18"></path>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            All Products
+          </h2>
+          <div class="product-count" id="product-count">0 items</div>
+        </div>
+        <div id="products-grid" class="products-grid grid-2x2"></div>
+      </section>
+    </main>
+
+    <!-- Mobile FAB -->
+    <button class="fab mobile-only" id="mobile-add-btn" title="Add Product">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="M12 5v14"></path>
+      </svg>
+    </button>
+
+    <!-- Mobile Modal -->
+    <div class="modal-overlay mobile-only" id="mobile-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add New Product</h2>
+          <button class="modal-close" id="modal-close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"></path>
+              <path d="M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="mobile-product-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="mobile-product-title">Product Title *</label>
+            <input id="mobile-product-title" name="title" required placeholder="Enter product title" />
+          </div>
+
+          <div class="form-group">
+            <label for="mobile-product-description">Description</label>
+            <textarea id="mobile-product-description" name="description" placeholder="Product description (optional)" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="mobile-product-price">Price</label>
+            <input id="mobile-product-price" name="price" placeholder="e.g. $99.99" />
+          </div>
+
+          <div class="form-group">
+            <label for="mobile-product-image">Product Image</label>
+            <div class="upload-area" id="mobile-upload-area">
+              <input id="mobile-product-image" name="image" type="file" accept="image/*" />
+              <div class="upload-content">
+                <div class="upload-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                    <circle cx="9" cy="9" r="2"></circle>
+                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+                  </svg>
+                </div>
+                <div class="upload-text">
+                  <span class="primary-text">Tap to upload</span>
+                  <span class="secondary-text">or drag and drop</span>
+                </div>
+                <div class="upload-hint">PNG, JPG, GIF up to 5MB</div>
+              </div>
+            </div>
+            <div class="image-preview hidden" id="mobile-image-preview">
+              <img id="mobile-preview-img" src="" alt="preview" />
+              <button type="button" class="remove-image" id="mobile-remove-image">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6 6 18"></path>
+                  <path d="M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+            <button type="button" class="btn btn-ghost" id="mobile-cancel">Cancel</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
