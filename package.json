@@ -8,8 +8,9 @@
     "dev": "node server.js",
     "start": "node server.js",
     "build": "npm install",
-    "deploy": "wrangler pages deploy .",
-    "preview": "wrangler pages dev ."
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
+    "preview": "vercel dev"
   },
   "keywords": ["ecommerce", "shop", "admin", "neondb", "cloudflare"],
   "author": "Your Name",
