@@ -286,6 +286,55 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
+// Serve CSS files
+app.get('/style.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(path.join(__dirname, 'style.css'));
+});
+
+app.get('/admin.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(path.join(__dirname, 'admin.css'));
+});
+
+// Serve JavaScript files
+app.get('/script.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, 'script.js'));
+});
+
+app.get('/admin.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, 'admin.js'));
+});
+
+// Serve other static assets
+app.get('/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, filename);
+  
+  // Set appropriate content types
+  if (filename.endsWith('.css')) {
+    res.setHeader('Content-Type', 'text/css');
+  } else if (filename.endsWith('.js')) {
+    res.setHeader('Content-Type', 'application/javascript');
+  } else if (filename.endsWith('.png')) {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (filename.endsWith('.jpg') || filename.endsWith('.jpeg')) {
+    res.setHeader('Content-Type', 'image/jpeg');
+  } else if (filename.endsWith('.gif')) {
+    res.setHeader('Content-Type', 'image/gif');
+  } else if (filename.endsWith('.svg')) {
+    res.setHeader('Content-Type', 'image/svg+xml');
+  }
+  
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      res.status(404).send('File not found');
+    }
+  });
+});
+
 // Start server
 const port = process.env.PORT || PORT;
 app.listen(port, async () => {
