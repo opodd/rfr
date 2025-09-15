@@ -444,16 +444,8 @@ function setupImagePreviews() {
 
 // Setup image upload with drag & drop for a specific form
 function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
-  let clickTimeout = null
-  
   // File input change handler
   input.addEventListener('change', (e) => {
-    // Clear any pending click timeout since we got a file
-    if (clickTimeout) {
-      clearTimeout(clickTimeout)
-      clickTimeout = null
-    }
-    
     handleFileSelect(e.target.files[0], preview, previewImg, uploadArea)
   })
 
@@ -504,15 +496,12 @@ function setupImageUpload(input, uploadArea, preview, previewImg, removeBtn) {
 
   // Click handler for upload area
   uploadArea.addEventListener('click', (e) => {
-    // Prevent multiple rapid clicks
-    if (clickTimeout) return
-    
-    clickTimeout = setTimeout(() => {
-      clickTimeout = null
-    }, 1000) // 1 second debounce
-    
-    input.click()
-  })
+    // Prevent the event from bubbling up to parent elements
+    // or triggering other handlers for the same event
+    e.stopPropagation();
+    e.preventDefault();
+    input.click();
+  });
 }
 
 // Handle file selection (both drag & drop and file input)
