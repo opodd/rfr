@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeSearch();
 });
 
-// API helpers for frontend
-const API_BASE = 'http://localhost:3000/api'
+// API helpers for frontend - use relative URL for both local and deployed environments
+const API_BASE = '/api'
 
 async function fetchProducts() {
   try {
